@@ -19,7 +19,7 @@ class OpnameController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+
     public function index()
     {
         $barang = Barang::orderBy('nama', 'ASC')->get();
@@ -30,12 +30,12 @@ class OpnameController extends Controller
     public function loaddata(Request $request)
     {
         $cari = $request->input('cari');
-        
-        $data_id = DB::table('barang')->where('nama',$cari)->first();
+
+        $data_id = DB::table('barang')->where('barcode',$cari)->first();
         $cari_riwayat = DB::table('riwayat')->where('barang_id',$data_id->id)->get();
-        
+
         if(count($cari_riwayat) === 0){
-        
+
             $data = DB::select('select * from barang where id = ? limit 1', [$data_id->id]);
         }else{
             $data = DB::select('select barang.*,riwayat.stok_akhir as stok,riwayat.barang_id from barang join riwayat on barang.id = riwayat.barang_id where riwayat.barang_id = ? order by riwayat.barang_id DESC limit 1', [$data_id->id]);
@@ -64,13 +64,13 @@ class OpnameController extends Controller
     public function store(Request $request)
     {
         $cek_stok_akhir = $request->stok;
-        
+
         $request->validate([
             'angka.*.real'=>'required'
         ]);
         foreach ($request->angka as $key => $value) {
                 $id_barang = $value['id'];
-                
+
             DB::table('riwayat')->insert([
                 'barang_id'=>$value['id'],
                 'stok_awal'=>$value['stok'],
@@ -84,9 +84,9 @@ class OpnameController extends Controller
             ]);
             DB::table('stok_per_lokasi')->where(['id_barang'=>$value['id'],'id_letak'=>$request->id_letak])->update(['stok'=>$value['real']]);
         }
-        
+
         return redirect()->route('opname.index');
-        
+
     }
 
     /**
