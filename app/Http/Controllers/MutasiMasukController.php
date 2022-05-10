@@ -1,0 +1,206 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Letak;
+use App\Barang;
+use App\Detailmutasimasuk;
+use App\Mutasimasuk;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+
+class MutasiMasukController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $letak = Letak::orderBy('letak', 'ASC')->get();
+        $barang = Barang::orderBy('nama', 'ASC')->get();
+        $tgl = now()->format('Y-m-d');
+        $nota_tgl = now()->format('dmY');
+        $data = DB::table('mutasi_masuk')->whereDate('tanggal', $tgl)->count();
+        $angka = '000'.$data;
+        $total_barang = Barang::orderBy('nama', 'ASC')->count();
+
+        // mengambil nota jual
+        $no_mutasi = 'MM'.$nota_tgl.$angka;
+        return view('admin.mutasi_masuk.index', compact('letak', 'barang', 'no_mutasi','total_barang'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        foreach ($request->mutasi_masuk as $key => $value) {
+            $id_barang = $value['id'];
+
+            DB::table('detail_mutasi_masuk')->insert([
+                'no_mutasi' => $request->no_mutasi,
+                'barang_id' => $value['id'],
+                'jml'       => $value['qty'],
+                'harga_beli' => $value['harga_beli'],
+                'sub_total' => $value['subtotal']
+            ]);
+            $cari_stok = DB::table('stok_per_lokasi')->where(['id_barang'=>$value['id'],'id_letak'=>$request->id_letak])->first();
+
+            DB::table('riwayat')->insert([
+                'barang_id' => $value['id'],
+                'stok_awal' => $cari_stok->stok,
+                'stok_akhir' => $cari_stok->stok+$value['qty'],
+                'masuk' => $value['qty'],
+                'keluar' => 0,
+                'bagian' => 'Mutasi Masuk',
+                'user_id'=>Auth::id(),
+                'letak_id' => $request->id_letak,
+                'aksi' => 'Simpan',
+                'tanggal' => $request->tanggal,
+                'no_faktur' => $request->no_mutasi
+            ]);
+            $cari_stok = DB::table('stok_per_lokasi')->where(['id_barang'=>$value['id'],'id_letak'=>$request->id_letak])->update(['stok'=>$cari_stok->stok+$value['qty']]);
+        }
+
+            DB::table('mutasi_masuk')->insert([
+                'no_mutasi'     => $request->no_mutasi,
+                'dari'          => $request->dari,
+                'letak_id'      => $request->id_letak,
+                'tanggal'       => $request->tanggal
+            ]);
+
+            Session::flash('message', 'Data Mutasi Masuk berhasil ditambahkan');
+            return redirect()->route('report-mutasi-masuk');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+
+    public function report(Request $request)
+    {
+        $cari = $request->get('cari');
+        $now = now()->format('Y-m-d');
+        $year = now()->format('Y');
+        $month = now()->format('m');
+        $lastmonth = now()->format('m')-1;
+        $data['a'] = 0;
+        if($cari == 'semua'){
+            $carijudul = 'Semua';
+            $report_mutasi_masuk = Mutasimasuk::orderBy('tanggal', 'DESC')->get();
+        }elseif($cari == 'hariini'){
+            $carijudul = 'Hari Ini';
+            $report_mutasi_masuk = Mutasimasuk::orderBy('tanggal', 'DESC')->where('tanggal',$now)->get();
+
+        }elseif($cari == 'bulanini'){
+            $carijudul = 'Bulan Ini';
+            $report_mutasi_masuk = Mutasimasuk::orderBy('tanggal', 'DESC')->whereMonth('tanggal',$month)->get();
+
+            
+        }elseif($cari == 'bulanlalu'){
+            $carijudul = 'Bulan Lalu';
+            $report_mutasi_masuk = Mutasimasuk::orderBy('tanggal', 'DESC')->whereMonth('tanggal',$lastmonth)->get();
+            
+        }elseif($cari == 'tahunini'){
+            $carijudul = 'Tahun Ini';
+            $report_mutasi_masuk = Mutasimasuk::orderBy('tanggal', 'DESC')->whereYear('tanggal',$year)->get();
+            
+        }elseif($cari == 'filter'){
+            $carijudul = 'Filter';
+            $data['dari'] = $request->get('dari');
+            $data['ke'] = $request->get('ke');
+            $report_mutasi_masuk = Mutasimasuk::orderBy('tanggal', 'DESC')->whereBetween('tanggal',[$data['dari'],$data['ke']])->get();
+        }else{
+            $carijudul = 'Hari Ini';
+            $report_mutasi_masuk = Mutasimasuk::orderBy('tanggal', 'DESC')->where('tanggal',$now)->get();
+        }
+
+        return view('admin.mutasi_masuk.report', compact('report_mutasi_masuk','carijudul','cari','data'));
+    }
+
+    public function detail(Mutasimasuk $mutasi_masuk)
+    {
+
+        $detail_mutasi_masuk = Detailmutasimasuk::orderBy('no_mutasi', 'ASC')
+                        ->join('mutasi_masuk', 'mutasi_masuk.no_mutasi', '=', 'detail_mutasi_masuk.no_mutasi')
+                        ->join('barang', 'barang.id', '=', 'detail_mutasi_masuk.barang_id')
+                        ->select('detail_mutasi_masuk.no_mutasi', 'barang.nama', 'barang.harga_beli as harga_brg', 'detail_mutasi_masuk.jml', 'detail_mutasi_masuk.harga_beli', 'detail_mutasi_masuk.sub_total')
+                        ->where('detail_mutasi_masuk.no_mutasi', $mutasi_masuk->no_mutasi)
+                        ->get();
+                        
+        return view('admin.mutasi_masuk.detail', compact('mutasi_masuk', 'detail_mutasi_masuk'));
+    }
+
+    public function cetak_nota(Mutasimasuk $mutasi_masuk)
+    {
+        $today = Carbon::now()->isoFormat('D MMMM Y');
+        $config = DB::table('konfigurasi')->first();
+        $detail_mutasi_masuk = Detailmutasimasuk::orderBy('no_mutasi', 'ASC')
+                        ->join('mutasi_masuk', 'mutasi_masuk.no_mutasi', '=', 'detail_mutasi_masuk.no_mutasi')
+                        ->join('barang', 'barang.id', '=', 'detail_mutasi_masuk.barang_id')
+                        ->select('detail_mutasi_masuk.no_mutasi', 'barang.nama', 'barang.harga_beli as harga_brg', 'detail_mutasi_masuk.jml', 'detail_mutasi_masuk.harga_beli', 'detail_mutasi_masuk.sub_total')
+                        ->where('detail_mutasi_masuk.no_mutasi', $mutasi_masuk->no_mutasi)
+                        ->get();
+        $judul = "Laporan Mutasi Masuk".$mutasi_masuk->nota_jual;
+        return view('admin.mutasi_masuk.nota', compact('mutasi_masuk','judul', 'detail_mutasi_masuk','today', 'config'));
+    }
+}
