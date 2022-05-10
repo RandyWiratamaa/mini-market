@@ -87,6 +87,11 @@
             height: 500px;
         }
 
+        .resize50 {
+            height:50px;
+            font-size: 20px;
+        }
+
         thead,
         tbody tr {
             display: table;

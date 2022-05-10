@@ -67,48 +67,44 @@
                                     <tbody id="list-form">
                                         <tr class="baris-data">
                                             <td style="width: 7%">
-                                                <input type="text" placeholder="Kode Barang" class="form-control id-barang"
+                                                <input type="text" placeholder="Kode Barang" class="form-control resize50 id-barang"
                                                     name="jual[0][id]" readonly>
                                             </td>
-                                            {{-- <td>
-                                                <input type="text" name="jual[0][barcode]" class="form-control caribarcode"
-                                                    autocomplete="off" list="list-data" placeholder="Barcode">
-                                            </td> --}}
                                             <td style="width:20%">
-                                                <input type="text" name="jual[0][nama]" class="form-control caribarang"
+                                                <input type="text" name="jual[0][nama]" class="form-control resize50 caribarang"
                                                     autocomplete="off" list="list-data" placeholder="Nama Barang">
                                             </td>
                                             <td width="5%">
-                                                <button type="button" class="btn btn-sm btn-default clear-barang"
+                                                <button type="button" class="btn btn-sm btn-default resize50 clear-barang"
                                                     title="Hapus Nama Barang" style=""><i class="icon icon-refresh"
                                                         style="font-size: 10px;"></i></button>
                                             </td>
                                             <td>
                                                 <input type="number" name="jual[0][harga_beli]"
-                                                    class="form-control harga_beli" placeholder="Harga Beli">
+                                                    class="form-control resize50 harga_beli" placeholder="Harga Beli">
                                             </td>
                                             <td>
                                                 <input type="number" name="jual[0][harga_eceran]"
-                                                    class="form-control harga_eceran" placeholder="Harga Eceran">
+                                                    class="form-control resize50 harga_eceran" placeholder="Harga Eceran">
                                             </td>
                                             <td style="width: 8%">
-                                                <input type="text" name="jual[0][qty]" class="form-control qty"
+                                                <input type="text" name="jual[0][qty]" class="form-control resize50 qty"
                                                     placeholder="Qty">
                                             </td>
                                             <td>
-                                                <input type="satuan" name="jual[0][satuan]" class="form-control satuan"
+                                                <input type="satuan" name="jual[0][satuan]" class="form-control resize50 satuan"
                                                     placeholder="Satuan" readonly>
                                             </td>
                                             <td>
-                                                <input type="number" name="jual[0][subtotal]" class="form-control subtotal"
+                                                <input type="number" name="jual[0][subtotal]" class="form-control resize50 subtotal"
                                                     placeholder="Subtotal" readonly>
                                             </td>
                                             <td>
-                                                <input type="number" name="jual[0][hpp]" class="form-control hpp"
+                                                <input type="number" name="jual[0][hpp]" class="form-control resize50 hpp"
                                                     placeholder="hpp" readonly>
                                             </td>
                                             <td>
-                                                <input type="number" name="jual[0][total]" class="form-control total"
+                                                <input type="number" name="jual[0][total]" class="form-control resize50 total"
                                                     placeholder="Total" readonly>
                                             </td>
 											<td></td>
@@ -118,7 +114,7 @@
                                         <td colspan="2">
                                             <label for="">Total Keseluruhan</label>
                                             <input type="number" name="total_keseluruhan"
-                                                class="form-control total-keseluruhan" placeholder="Jumlah Total" readonly>
+                                                class="form-control resize50 total-keseluruhan" placeholder="Jumlah Total" style="font-size: 25px;" readonly>
                                         </td>
                                     </tr>
                                     <tr>
@@ -174,23 +170,24 @@
             ++jual
             list.append(
                 '<tr class="baris-data"> \
-                    <td style="width: 7%"><input type="text" placeholder="Kode Barang" class="form-control id-barang" name="jual[' + jual + '][id]" readonly></td> \
-                    <td style="width: 20%"><input type="text" name="jual[' + jual + '][nama]" class="form-control caribarang" autocomplete="off" list="list-data" placeholder="Nama Barang"></td> \
-                    <td width="5%"><button type="button" class="btn btn-sm btn-default clear-barang" title="Hapus Nama Barang" style=""><i class="icon icon-refresh" style="font-size: 10px;"></i></button></td>\
-                    <td><input type="number" name="jual[' + jual + '][harga_beli]" class="form-control harga_beli" placeholder="Harga Beli"></td> \
-                    <td><input type="number" name="jual[' + jual + '][harga_eceran]" class="form-control harga_eceran" placeholder="Harga Jual"></td> \
-                    <td style="width: 8%"><input type="text" name="jual[' + jual + '][qty]" class="form-control qty" required placeholder="Qty"></td> \
-                    <td><input type="text" name="jual[' + jual + '][satuan]" class="form-control satuan" placeholder="Satuan" readonly></td> \
-                    <td><input type="number" name="jual[' + jual + '][subtotal]" class="form-control subtotal" placeholder="Subtotal" readonly></td> \
-                    <td><input type="number" name="jual[' + jual + '][hpp]" class="form-control hpp" placeholder="hpp" readonly></td> \
-                    <td><input type="number" name="jual[' + jual + '][total]" class="form-control total" placeholder="Total" readonly></td> \
-                    <td><button type="button" class="btn btn-sm btn-danger hapus-input" title="Hapus Baris"><i class="icon-trash" style="font-size:10px"></i></button></td> \
+                    <td style="width: 7%"><input type="text" placeholder="Kode Barang" class="form-control resize50 id-barang" name="jual[' + jual + '][id]" readonly></td> \
+                    <td style="width: 20%"><input type="text" name="jual[' + jual + '][nama]" class="form-control resize50 caribarang" autocomplete="off" list="list-data" placeholder="Nama Barang"></td> \
+                    <td width="5%"><button type="button" class="btn btn-sm btn-default resize50 clear-barang" title="Hapus Nama Barang" style=""><i class="icon icon-refresh" style="font-size: 10px;"></i></button></td>\
+                    <td><input type="number" name="jual[' + jual + '][harga_beli]" class="form-control resize50 harga_beli" placeholder="Harga Beli"></td> \
+                    <td><input type="number" name="jual[' + jual + '][harga_eceran]" class="form-control resize50 harga_eceran" placeholder="Harga Jual"></td> \
+                    <td style="width: 8%"><input type="text" name="jual[' + jual + '][qty]" class="form-control resize50 qty" required placeholder="Qty"></td> \
+                    <td><input type="text" name="jual[' + jual + '][satuan]" class="form-control resize50 satuan" placeholder="Satuan" readonly></td> \
+                    <td><input type="number" name="jual[' + jual + '][subtotal]" class="form-control resize50 subtotal" placeholder="Subtotal" readonly></td> \
+                    <td><input type="number" name="jual[' + jual + '][hpp]" class="form-control resize50 hpp" placeholder="hpp" readonly></td> \
+                    <td><input type="number" name="jual[' + jual + '][total]" class="form-control resize50 total" placeholder="Total" readonly></td> \
+                    <td><button type="button" class="btn btn-sm btn-danger resize50 hapus-input" title="Hapus Baris"><i class="icon-trash"></i></button></td> \
                 </tr> \
                 '
             )
         })
 
         $(document).on('keyup', '.caribarang', function() {
+
             var barang = $(this).val().toLowerCase()
             var baris_b = $(this).parents('.baris-data')
 
