@@ -19,7 +19,7 @@ class Barang extends Model
         'harga_umum',
         'stok_minimal',
         'stok_akhir',
-        'expire', 
+        'expire',
         'id_jenis',
         'id_golongan',
         'id_kategori',
@@ -35,7 +35,7 @@ class Barang extends Model
 
     public function jenis()
     {
-    
+
         return $this->hasOne('App\Jenis', 'id_jenis', 'id_jenis');
     }
 
@@ -55,5 +55,10 @@ class Barang extends Model
     }
     public function riwayat(){
         return $this->hasMany(Riwayat::class);
+    }
+
+    public function stok_per_lokasi()
+    {
+        return $this->hasOne(Stokperlokasi::class, 'id_barang', 'id');
     }
 }

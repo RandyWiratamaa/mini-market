@@ -79,7 +79,7 @@
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="text-center">
                                         <?php $laba_hariini = 0; ?>
                                         @foreach ($report_jual as $hariini)
                                             <?php $laba_hariini += $hariini->total_jual - $hariini->hpp; ?>
@@ -90,7 +90,7 @@
                                                         {{ $hariini->nota_jual }}
                                                     </a>
                                                 </td>
-                                                <td>{{ $hariini->created_at->isoFormat('D MMMM Y') }}</td>
+                                                <td>{{ $hariini->created_at->isoFormat('dddd, D MMMM Y') }}</td>
                                                 <td>@currency($hariini->total_jual)</td>
                                                 <td>@currency($hariini->hpp)</td>
                                                 <td>
@@ -104,8 +104,15 @@
                                         @endforeach
                                     </tbody>
                                     <tr>
-                                        <td colspan="6" style="text-align: right; font-weight:bold">Untung Bersih</td>
-                                        <td class="total-laba" style="font-weight:bold">@currency($laba_hariini)</td>
+                                        <td colspan="6" style="text-align: right; font-weight:bold; font-size:20px; color:black">Untung Bersih</td>
+                                        <td colspan="3" class="total-laba" style="font-weight:bold; font-size:20px; color:black;">
+                                            <?php if ($cari == 'filter'): ?>
+                                            Dari {{ $data['dari'] }} Ke
+                                                {{ $data['ke'] }} : <em>@currency($laba_hariini)</em>
+                                            <?php else: ?>
+                                            {{ $carijudul }} : <em>@currency($laba_hariini)</em>
+                                            <?php endif; ?>
+                                        </td>
                                         <td>&nbsp;</td>
                                     </tr>
                                 </table>

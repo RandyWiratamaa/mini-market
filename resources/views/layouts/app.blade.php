@@ -69,6 +69,9 @@
 
 
     <style>
+        :root {
+            --primary:  rgb(32, 165, 14);
+        }
         tbody {
             display: block;
             height: 100%;
@@ -90,6 +93,11 @@
         .resize50 {
             height:50px;
             font-size: 20px;
+        }
+
+        .resize75 {
+            height:75px;
+            font-size: 40px;
         }
 
         thead,

@@ -13,4 +13,9 @@ class Stokperlokasi extends Model
         'id_letak',
         'stok'
     ];
+
+    public function barang()
+    {
+        return $this->belongsTo(Barang::class, 'id_barang', 'id');
+    }
 }

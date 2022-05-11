@@ -66,7 +66,7 @@
                                     </thead>
                                     <tbody id="list-form">
                                         <tr class="baris-data">
-                                            <td style="width:60px;">
+                                            <td style="width:50px;">
                                                 <input type="text" placeholder="Kode Barang" class="form-control resize50 id-barang"
                                                 name="jual[0][id]" readonly>
                                             </td>
@@ -91,7 +91,7 @@
                                                 <input type="number" name="jual[0][harga_eceran]"
                                                     class="form-control resize50 harga_eceran" placeholder="Harga Eceran">
                                             </td>
-                                            <td style="width:50px">
+                                            <td style="width:60px">
                                                 <input type="text" name="jual[0][qty]" class="form-control resize50 qty"
                                                     placeholder="Qty">
                                             </td>
@@ -136,21 +136,21 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="total_hpp">Total HPP</label>
-                                    <input type="number" name="total_hpp" id="total_hpp" class="form-control total_hpp"
+                                    <input type="number" name="total_hpp" id="total_hpp" class="form-control total_hpp resize50"
                                         readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="total_jual">Nominal</label>
-                                    <input type="number" name="total_keseluruhan" id="total_keseluruhan"
-                                        class="form-control total-keseluruhan" required>
+                                    <input type="number" name="tagihan" id="tagihan"
+                                        class="form-control tagihan resize75" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="bayar">Dibayarkan</label>
-                                    <input type="number" name="bayar" id="bayar" class="form-control" required>
+                                    <input type="number" name="bayar" id="bayar" class="form-control bayar resize75" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="kembalian">Kembalian</label>
-                                    <input type="number" name="kembalian" id="kembalian" class="form-control" required>
+                                    <input type="number" name="kembalian" id="kembalian" class="form-control kembalian resize75" required readonly>
                                 </div>
                                 <button type="submit" class="btn btn-success btn-block">Simpan Transaksi</button>
                             </div>
@@ -174,13 +174,13 @@
             ++jual
             list.append(
                 '<tr class="baris-data"> \
-                    <td><input type="text" placeholder="Kode Barang" class="form-control resize50 id-barang" style="width:60px;" name="jual[' + jual + '][id]" readonly></td> \
+                    <td style="width: 50px"><input type="text" placeholder="Kode Barang" class="form-control resize50 id-barang" style="width:60px;" name="jual[' + jual + '][id]" readonly></td> \
                     <td style="width: 20%"><input type="text" name="jual[' + jual + '][nama]" class="form-control resize50 nama_barang" autocomplete="off" list="list-data" placeholder="Nama Barang" disabled></td> \
                     <td style="width: 14%"><input type="text" name="jual[' + jual + '][barcode]" class="form-control resize50 caribarang" autocomplete="off" list="list-data" placeholder="Barcode"></td> \
                     <td width="5%"><button type="button" class="btn btn-sm btn-default resize50 clear-barang" title="Hapus Nama Barang" style=""><i class="icon icon-refresh" style="font-size: 10px;"></i></button></td>\
                     <td style="width: 8%"><input type="number" name="jual[' + jual + '][harga_beli]" class="form-control resize50 harga_beli" placeholder="Harga Beli"></td> \
                     <td style="width: 8%"><input type="number" name="jual[' + jual + '][harga_eceran]" class="form-control resize50 harga_eceran" placeholder="Harga Jual"></td> \
-                    <td style="width:50px;"><input type="text" name="jual[' + jual + '][qty]" class="form-control resize50 qty" required placeholder="Qty"></td> \
+                    <td style="width:60px;"><input type="text" name="jual[' + jual + '][qty]" class="form-control resize50 qty" required placeholder="Qty"></td> \
                     <td><input type="text" name="jual[' + jual + '][satuan]" class="form-control resize50 satuan" placeholder="Satuan" readonly></td> \
                     <td><input type="number" name="jual[' + jual + '][subtotal]" class="form-control resize50 subtotal" placeholder="Subtotal" readonly></td> \
                     <td><input type="number" name="jual[' + jual + '][hpp]" class="form-control resize50 hpp" placeholder="hpp" readonly></td> \
@@ -326,13 +326,15 @@
 
         }
 
-        $(document).on('keyup', '#bayar', function() {
-            var total = parseInt($('#bayar').val()) - parseInt($('.total_keseluruhan').val());
-            $('#kembalian').val(total);
+        $(document).on('keyup', '.bayar', function() {
+            var total = parseInt($('.bayar').val())-parseInt($('.tagihan').val());
+            $('.kembalian').val(total);
+            // convert_kembalian(total)
         })
-        $(document).on('change', '#bayar', function() {
-            var total = parseInt($('#bayar').val()) - parseInt($('.total_keseluruhan').val());
-            $('#kembalian').val(total);
+        $(document).on('change', '.bayar', function() {
+            var total = parseInt($('.bayar').val())-parseInt($('.tagihan').val());
+            $('.kembalian').val(total);
+            // convert_kembalian(total)
         })
 
         $(document).on('click', '.clear-barang', function() {
@@ -355,6 +357,20 @@
 			total_hpp()
 			mencari_total()
         })
+
+        function convert_kembalian(nilai){
+            bilangan = parseInt(nilai);
+            var number_string = bilangan.toString(),
+                sisa    = number_string.length % 3,
+                rupiah  = number_string.substr(0, sisa),
+                ribuan  = number_string.substr(sisa).match(/\d{3}/g);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+            $('.kembalian').val("Rp. "+rupiah)
+        }
 
     </script>
 @endsection
