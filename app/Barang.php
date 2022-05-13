@@ -53,8 +53,9 @@ class Barang extends Model
     {
         return $this->belongsTo(Satuan::class, 'id_satuan');
     }
-    public function riwayat(){
-        return $this->hasMany(Riwayat::class);
+    public function riwayat()
+    {
+        return $this->belongsTo(Riwayat::class, 'barang_id', 'id');
     }
 
     public function stok_per_lokasi()

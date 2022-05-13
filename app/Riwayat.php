@@ -15,9 +15,17 @@ class Riwayat extends Model
     	'nama',
     	'stok_akhir',
 	];
-	
+
 	public function barang(){
-		return $this->belongsTo(Barang::class, 'barang_id' , 'id');
+		return $this->hasMany(Barang::class, 'barang_id' , 'id');
+	}
+
+    public function letak_barang(){
+		return $this->hasMany(Letak::class, 'letak_id' , 'id_letak');
+	}
+
+    public function user(){
+		return $this->hasMany(User::class, 'user_id' , 'id');
 	}
 }
 

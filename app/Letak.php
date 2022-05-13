@@ -12,4 +12,9 @@ class Letak extends Model
     protected $fillable = [
         'letak'
     ];
+
+    public function riwayat()
+    {
+        return $this->belongsTo(Riwayat::class, 'letak_id', 'id_letak');
+    }
 }

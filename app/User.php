@@ -36,4 +36,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function riwayat()
+    {
+        return $this->belongsTo(Riwayat::class, 'user_id', 'id');
+    }
 }
