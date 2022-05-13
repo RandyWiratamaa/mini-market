@@ -39,8 +39,7 @@
                                         <th>Barcode</th>
                                         <th>Satuan</th>
                                         <th>Harga Modal</th>
-                                        <th>Harga Jual Eceran</th>
-                                        <th>Harga Jual Grosir</th>
+                                        <th>Harga Jual</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -52,7 +51,6 @@
                                             <td>{{ $item->satuan }}</td>
                                             <td>@currency($item->harga_beli)</td>
                                             <td>@currency($item->harga_eceran)</td>
-                                            <td>@currency($item->harga_grosir)</td>
                                             <td width="16%">
                                                 <a href="{{ route('barang.edit', $item->id) }}" class="icon-edit">
                                                     Edit</a>

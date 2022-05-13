@@ -7,18 +7,17 @@
                 <div class="col=-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="icon-briefcase"></i>
-                            <h3> Opname Barang</h3>
+                            <h3 class="text-center">UPDATE STOK BARANG</h3>
                         </div>
                         <div class="card-body">
                             <form action="{{ route('opname.store') }}" method="POST" class="form-horizontal">
                                 @csrf
-                                <div class="control-group">
+                                <div class="form-group">
                                     <label for="tanggal">Tanggal</label>
                                     <input type="date" class="form-control col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12"
                                         name="tanggal" id="tanggal">
                                 </div>
-                                <div class="control-group">
+                                <div class="form-group">
                                     <label for="id_letak">Lokasi Opname</label>
                                     <select name="id_letak" id="id_letak"
                                         class="form-control col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
@@ -27,16 +26,17 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="control-group">
+                                <div class="form-group">
                                     <label for="id_letak">Keterangan</label>
                                     <input type="text" name="keterangan" class="form-control" id="keterangan" required>
                                 </div>
-                                <table class="responsive-table" style="width:100%">
+                                <table class="responsive-table mt-4" style="width:100%">
                                     <thead>
-                                        <tr>
+                                        <tr class="text-center">
                                             <th>Real</th>
                                             <th class="hidden">Kode Barang</th>
                                             <th colspan="2" width="25%">Barang</th>
+                                            <th width="5%"></th>
                                             <th>Harga</th>
                                             <th>Stok</th>
                                             <th>Selisih</th>
@@ -54,7 +54,7 @@
                                             </td>
                                             <td class="hidden"><input type="text" placeholder="Kode Barang"
                                                     class="form-control id-barang" name="angka[0][id]" readonly></td>
-                                            <td width="20%">
+                                            <td width="25%">
                                                 <input name="angka[0][nama]" type="text" autocomplete="off" list="list-data"
                                                     class="form-control caribarang" placeholder="Nama Barang">
                                             </td>
@@ -64,28 +64,24 @@
                                                         style="font-size: 10px;"></i></button>
                                             </td>
                                             <td>
-                                                <input type="number" placeholder="Harga Beli"
-                                                    class="form-control harga-beli" name="angka[0][harga_beli]">
+                                                <input type="number" class="form-control harga-beli" name="angka[0][harga_beli]">
                                             </td>
                                             <td>
-                                                <input type="number" placeholder="Stok" class="form-control stok"
-                                                    name="angka[0][stok]">
+                                                <input type="number" class="form-control stok" name="angka[0][stok]" value="0">
                                             </td>
                                             <td>
-                                                <input type="number" class="form-control harga-selisih"
-                                                    name="angka[0][selisih]" placeholder="Selisih">
+                                                <input type="number" class="form-control harga-selisih" name="angka[0][selisih]">
                                             </td>
                                             <td>
-                                                <input type="number" class="form-control harga-lebih" name="angka[0][lebih]"
-                                                    placeholder="Lebih">
+                                                <input type="number" class="form-control harga-lebih" name="angka[0][lebih]">
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control nominal-selisih"
-                                                    name="angka[0][nominal_selisih]" placeholder="nominal_selisih">
+                                                    name="angka[0][nominal_selisih]">
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control nominal-lebih"
-                                                    name="angka[0][nominal_lebih]" placeholder="nominal_lebih">
+                                                    name="angka[0][nominal_lebih]">
                                             </td>
                                             <td></td>
                                         </tr>
@@ -126,10 +122,10 @@
                         " <tr class='baris-data'>\
                             <td><input type='number' placeholder='Stok Real' class='form-control real_stok' name='angka[" +angka +"][real]' readonly='true'></td> \
                             <td><input type='text' placeholder='ID Obat' class='form-control id-barang' name='angka[" +angka +"][id]' readonly> </td>\
-                            <td width='20%'><input name='angka[" +angka +"][nama]' type='text' autocomplete='off' list='list-data' class='form-control caribarang' placeholder='Nama Obat'></td>\
+                            <td width='25%'><input name='angka[" +angka +"][nama]' type='text' autocomplete='off' list='list-data' class='form-control caribarang' placeholder='Nama Obat'></td>\
                             <td width='5%'><button type='button' class='btn btn-sm btn-default clear-barang' title='Hapus Nama Barang'><i class='icon icon-refresh' style='font-size:10px'></i></button></td>\
                             <td><input type='number' placeholder='Harga Beli' class='form-control harga-beli' name='angka[" +angka +"][harga_beli]'></td> \
-                            <td><input type='number' placeholder='Stok' class='form-control stok' name='angka[" +angka +"][stok]' required></td> \
+                            <td><input type='number' placeholder='Stok' class='form-control stok' name='angka[" +angka +"][stok]' value='0' required></td> \
                             <td><input type='text' class='form-control harga-selisih' name='angka[" +angka +"][selisih]' placeholder='Selisih'></td> \
                             <td><input type='text' class='form-control harga-lebih' name='angka[" +angka +"][lebih]' placeholder='Lebih'></td> \
                             <td><input type='text' class='form-control nominal-selisih' name='angka[" +angka +"][nominal_selisih]' placeholder='nominal_selisih'></td> \
@@ -176,7 +172,7 @@
                     var barang = $(this).val().toLowerCase()
                     var baris_b = $(this).parents('.baris-data');
                     $.ajax({
-                        url: "{{ route('cari') }}",
+                        url: "{{ route('cari-nama') }}",
                         dataType: 'JSON',
                         type: 'GET',
                         data: {
@@ -228,7 +224,7 @@
                     var barang = $(this).val().toLowerCase()
                     var baris_b = $(this).parents('.baris-data');
                     $.ajax({
-                        url: "{{ route('cari') }}",
+                        url: "{{ route('cari-nama') }}",
                         dataType: 'JSON',
                         type: 'GET',
                         data: {
@@ -236,7 +232,7 @@
                         },
                         success: function(data) {
                             $.each(data, function(index, obj) {
-                                // alert(obj.nama)
+                                // alert(obj.stok)
                                 // console.log(obj.nama)
                                 if (baris_b.find('.caribarang').val() == '') {
                                     $('#list-data option[value="' + barang + '"]').removeAttr(
@@ -246,7 +242,7 @@
                                         'disabled', true);
                                 }
                                 baris_b.find('.harga-beli').val(obj.harga_beli)
-                                baris_b.find('.stok').val(obj.stok_akhir)
+                                baris_b.find('.stok').val(obj.stok)
                                 baris_b.find('.id-barang').val(obj.id)
                                 baris_b.find('.real_stok').removeAttr('readonly')
                             })

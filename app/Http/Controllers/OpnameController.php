@@ -27,6 +27,7 @@ class OpnameController extends Controller
         $total_barang = Barang::orderBy('nama', 'ASC')->count();
         return view('admin.opname.index', compact('barang', 'letak', 'total_barang'));
     }
+
     public function loaddata(Request $request)
     {
         $cari = $request->input('cari');
@@ -39,6 +40,22 @@ class OpnameController extends Controller
             $data = DB::select('select * from barang where id = ? limit 1', [$data_id->id]);
         }else{
             $data = DB::select('select barang.*,riwayat.stok_akhir as stok,riwayat.barang_id from barang join riwayat on barang.id = riwayat.barang_id where riwayat.barang_id = ? order by riwayat.barang_id DESC limit 1', [$data_id->id]);
+        }
+
+        return response()->json($data);
+    }
+
+    public function loaddata2(Request $request)
+    {
+        $cari = $request->input('cari');
+
+        $data_id = DB::table('barang')->where('nama',$cari)->first();
+        $cari_riwayat = DB::table('riwayat')->where('barang_id',$data_id->id)->orderBy('tanggal', 'ASC')->limit(1)->get();
+
+        if(count($cari_riwayat) == 0){
+            $data = DB::select('select * from barang where id = ? limit 1', [$data_id->id]);
+        }else{
+            $data = DB::select('select barang.*,riwayat.stok_akhir as stok,riwayat.barang_id from barang join riwayat on barang.id = riwayat.barang_id where riwayat.barang_id = ? order by riwayat.tanggal DESC limit 1', [$data_id->id]);
         }
 
         return response()->json($data);

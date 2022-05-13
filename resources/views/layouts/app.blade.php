@@ -16,7 +16,8 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('penjualan/vendor/bootstrap/css/bootstrap.min.css') }}">
-    <link href="{{ asset('penjualanvendor/fonts/circular-std/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('penjualan/vendor/fonts/circular-std/style.css') }}" rel="stylesheet">
+    {{-- <link rel="stylesheet" href="{{ asset('penjualan/libs/css/semantic.min.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('penjualan/libs/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('penjualan/vendor/fonts/fontawesome/css/fontawesome-all.css') }}">
     <link rel="stylesheet" href="{{ asset('penjualan/vendor/charts/chartist-bundle/chartist.css') }}">
@@ -69,9 +70,6 @@
 
 
     <style>
-        :root {
-            --primary:  rgb(32, 165, 14);
-        }
         tbody {
             display: block;
             height: 100%;
@@ -92,7 +90,7 @@
 
         .resize50 {
             height:50px;
-            font-size: 20px;
+            font-size: 18px;
         }
 
         .resize75 {
@@ -122,8 +120,8 @@
 <body>
     <div class="dashboard-main-wrapper">
         <div class="dashboard-header">
-            <nav class="navbar navbar-expand-lg bg-white fixed-top">
-                <a class="navbar-brand" href="{{ route('home.index') }}">Alhamdulillah Mart</a>
+            <nav class="navbar navbar-expand-lg bg-info fixed-top">
+                <a class="navbar-brand text-dark" style="font-size: 20px" href="{{ route('home.index') }}">Alhamdulillah Mart</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -134,13 +132,12 @@
                         <li class="nav-item dropdown nav-user">
                             <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
-                                    src="{{ asset('penjualan/images/avatar-1.jpg') }}" alt=""
+                                    src="{{ asset('penjualan/images/avatar.png') }}" alt=""
                                     class="user-avatar-md rounded-circle"></a>
                             <div class="dropdown-menu dropdown-menu-right nav-user-dropdown"
                                 aria-labelledby="navbarDropdownMenuLink2">
                                 <div class="nav-user-info">
-                                    <h5 class="mb-0 text-white nav-user-name">{{ Auth::user()->name }} </h5>
-                                    <span class="status"></span><span class="ml-2">Available</span>
+                                    <h5 class="mb-0 text-white nav-user-name">{{ Auth::user()->name }}</h5>
                                 </div>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();"
@@ -158,7 +155,8 @@
             </nav>
         </div>
 
-        <div class="nav-left-sidebar sidebar-dark">
+
+        <div class="sidebar-dark nav-left-sidebar bg-info text-dark">
             <div class="menu-list">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <a class="d-xl-none d-lg-none" href="{{ route('home.index') }}">Dashboard</a>
@@ -166,60 +164,63 @@
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="collapse navbar-collapse bg-info" id="navbarNav">
                         <ul class="navbar-nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('home.index') }}"><i
-                                        class="fas fa-chart-line"></i>DASHBOARD</a>
+                                <a class="nav-link text-dark" href="{{ route('home.index') }}"><i
+                                        class="fas fa-chart-line text-dark"></i>DASHBOARD</a>
                             </li>
-                            <li class="nav-item ">
-                                <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false"
+                            <li class="nav-item bg-info">
+                                <a class="nav-link active bg-info text-dark" href="#" data-toggle="collapse" aria-expanded="false"
                                     data-target="#submenu-1" aria-controls="submenu-1"><i
-                                        class="fas fa-dollar-sign"></i></i>PENJUALAN</a>
-                                <div id="submenu-1" class="collapse submenu" style="">
-                                    <ul class="nav flex-column">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('penjualan.index') }}">PENJUALAN</a>
+                                        class="fas fa-dollar-sign text-dark"></i></i>PENJUALAN</a>
+                                <div id="submenu-1" class="collapse submenu bg-info" style="">
+                                    <ul class="nav flex-column bg-info">
+                                        <li class="nav-item bg-info">
+                                            <a class="nav-link text-dark" href="{{ route('penjualan.index') }}">PENJUALAN</a>
+                                        </li>
+                                        <li class="nav-item bg-info">
                                             {{-- <a class="nav-link" href="{{ route('eceran.index') }}">ECERAN</a> --}}
-                                            <a href="{{ route('riwayat.index') }}" class="nav-link">RIWAYAT
+                                            <a href="{{ route('riwayat.index') }}" class="nav-link text-dark">RIWAYAT
                                                 PENJUALAN</a>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="fas fa-cart-plus"></i>PEMBELIAN</a>
+                            <li class="nav-item bg-info">
+                                <a class="nav-link text-dark text-dark" href="#"><i class="fas fa-cart-plus text-dark"></i>PEMBELIAN</a>
                             </li>
-                            <li class="nav-item ">
-                                <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false"
+                            <li class="nav-item bg-info">
+                                <a class="nav-link active bg-info text-dark" href="#" data-toggle="collapse" aria-expanded="false"
                                     data-target="#submenu-2" aria-controls="submenu-2"><i
-                                        class="fas fa-book"></i>LAPORAN</a>
-                                <div id="submenu-2" class="collapse submenu" style="">
+                                        class="fas fa-book text-dark"></i>LAPORAN</a>
+                                <div id="submenu-2" class="collapse submenu bg-info" style="">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('report') }}">Laporan Penjualan</a>
+                                            <a class="nav-link text-dark" href="{{ route('report') }}">LAPORAN PENJUALAN</a>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
-                            <li class="nav-item ">
-                                <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false"
+                            <li class="nav-item bg-info">
+                                <a class="nav-link active bg-info text-dark" href="#" data-toggle="collapse" aria-expanded="false"
                                     data-target="#submenu-3" aria-controls="submenu-3"><i
-                                        class="fas fa-bold"></i>BARANG</a>
-                                <div id="submenu-3" class="collapse submenu" style="">
+                                        class="fas fa-bold text-dark"></i>BARANG</a>
+                                <div id="submenu-3" class="collapse submenu bg-info" style="">
                                     <ul class="nav flex-column">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('barang.index') }}">Data Barang</a>
+                                        <li class="nav-item bg-info">
+                                            <a class="nav-link text-dark" href="{{ route('barang.index') }}">DATA BARANG</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('opname.index') }}">Stok Barang</a>
+                                        <li class="nav-item bg-info">
+                                            <a class="nav-link text-dark" href="{{ route('opname.index') }}">UPDATE STOK BARANG</a>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('stok.index') }}"><i
-                                        class="fas fa-chart-line"></i>STOK BARANG</a>
+                            <li class="nav-item bg-info">
+                                <a class="nav-link text-dark" href="{{ route('stok.index') }}">
+                                    <i class="fas fa-chart-line text-dark"></i>SISA STOK
+                                </a>
                             </li>
                         </ul>
                     </div>

@@ -76,6 +76,7 @@ class PenjualanController extends Controller
             $cari_stok = DB::table('stok_per_lokasi')->where(['id_barang'=>$value['id'],'id_letak'=>$request->id_letak])->first();
 
             DB::table('riwayat')->insert([
+                'no_faktur' => $request->nota_jual,
                 'barang_id' => $value['id'],
                 'stok_awal' => $cari_stok->stok,
                 'stok_akhir' => $cari_stok->stok-$value['qty'],

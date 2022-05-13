@@ -46,6 +46,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('opname', 'OpnameController');
     Route::resource('golongan', 'GolonganController');
     Route::get('cari', 'OpnameController@loaddata')->name('cari');
+    Route::get('cari-nama', 'OpnameController@loaddata2')->name('cari-nama');
     Route::get('cari-jenis', 'BarangController@cari_jenis')->name('cari-jenis');
     Route::get('cari-supplier', 'PembelianController@loaddata')->name('carisupplier');
     Route::resource('riwayat', 'RiwayatController');
@@ -53,7 +54,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('penjualan', 'PenjualanController')->except(['show','destroy']);
     Route::resource('eceran', 'EceranController')->except(['show','destroy']);
     Route::resource('pembelian', 'PembelianController')->except(['show','destroy']);
-    
+
     // modul penjualan
     Route::get('report', 'PenjualanController@report')->name('report');
     Route::get('retur-jual', 'PenjualanController@retur')->name('retur-penjualan');

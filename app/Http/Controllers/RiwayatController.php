@@ -20,7 +20,7 @@ class RiwayatController extends Controller
                     ->join('letak_barang', 'letak_barang.id_letak', '=', 'riwayat.letak_id')
                     ->join('users', 'users.id', '=', 'riwayat.user_id')
                     ->where('riwayat.bagian', '=', 'Penjualan')
-                    ->paginate(10);
+                    ->get();
         return view('admin.riwayat.index', compact('riwayat'));
     }
 

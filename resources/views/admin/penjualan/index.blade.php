@@ -3,9 +3,11 @@
 @section('content')
     <div class="dashboard-wrapper">
         <div class="container-fluid dashboard-content">
-            <h3>Penjualan Barang</h3>
+            <h3 class="text-center"><legend>PENJUALAN BARANG</legend></h3>
 
-			<a href="{{ route('penjualan.index') }}" class="btn btn-sm btn-info">Transaksi Selanjutnya</a>
+            <div class="row mb-2">
+                <a href="{{ route('penjualan.index') }}" class="btn btn-sm btn-info text-dark">Transaksi Selanjutnya</a>
+            </div>
 
             <form action="#" target="__blank" method="post" class="needs-validation">
                 @csrf
@@ -27,6 +29,7 @@
                                         }
 
                                     </script>
+                                </div>
                                 <div class="form-group">
                                     <select name="id_letak" id="id_letak" class="form-control" hidden="hidden">
                                         @foreach ($letak as $letak)
@@ -37,7 +40,7 @@
                                 </div>
                                 <div class="form-group">
                                     <input type="hidden" name="jenis_jual" id="jenis_jual" class="form-control"
-                                        placeholder="Jenis Jual" value="GROSIR" readonly>
+                                        placeholder="Jenis Jual" value="Mini Market" readonly>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +64,7 @@
                                             <th>Sub Total</th>
                                             <th>HPP</th>
                                             <th>Total</th>
-											<th>&nbsp;</th>
+											<th style="width: 5%">&nbsp;</th>
                                         </tr>
                                     </thead>
                                     <tbody id="list-form">
@@ -111,23 +114,33 @@
                                                 <input type="number" name="jual[0][total]" class="form-control resize50 total"
                                                     placeholder="Total" readonly>
                                             </td>
-											<td></td>
+											<td style="width: 5%"></td>
                                         </tr>
                                     </tbody>
-                                    <tr>
+                                    {{-- <tr>
                                         <td colspan="2">
-                                            {{-- <label for="">Total Keseluruhan</label> --}}
                                             <input type="number" name="total_keseluruhan"
                                                 class="form-control resize50 total-keseluruhan" placeholder="Total" style="font-size: 40px;width:200px;height:150px;text-align:center;" readonly>
                                         </td>
-                                    </tr>
+                                    </tr> --}}
                                     <tr>
-                                        <td colspan="8" style="text-align: right">
+                                        <td colspan="8" style="text-align: right; width: 5%;">
                                             <button type="button" id="tambah-input" class="btn btn-primary">
-                                                <i class="fas fa-cart-plus" style="font-size: 20px;"></i></button>
+                                                <i class="fas fa-cart-plus" title="Tambah Data" style="font-size: 20px;"></i></button>
                                         </td>
                                     </tr>
                                 </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label style="font-size: 18px">Total Belanja</label>
+                                    <input type="number" name="total_keseluruhan" class="form-control resize50 total-keseluruhan"
+                                    placeholder="Total" style="font-size: 80px;width:430px;height:430px;text-align:center;" readonly>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -185,10 +198,9 @@
                     <td><input type="number" name="jual[' + jual + '][subtotal]" class="form-control resize50 subtotal" placeholder="Subtotal" readonly></td> \
                     <td><input type="number" name="jual[' + jual + '][hpp]" class="form-control resize50 hpp" placeholder="hpp" readonly></td> \
                     <td><input type="number" name="jual[' + jual + '][total]" class="form-control resize50 total" placeholder="Total" readonly></td> \
-                    <td><button type="button" class="btn btn-sm btn-danger resize50 hapus-input" title="Hapus Baris"><i class="icon-trash"></i></button></td> \
+                    <td style="width: 5%"><button type="button" class="btn btn-sm btn-danger resize50 hapus-input" title="Hapus Baris"><i class="icon-trash"></i></button></td> \
                 </tr> \
-                '
-            )
+                ')
         })
 
         $(document).on('keyup', '.caribarang', function() {

@@ -84,20 +84,11 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="harga_eceran">Harga Jual Eceran</label>
+                                    <label for="harga_eceran">Harga Jual</label>
                                     <div class="input-group mb-3"><span class="input-group-prepend"><span
                                                 class="input-group-text">Rp </span></span>
                                         <input type="number" class="form-control harga_eceran" name="harga_eceran"
                                             id="harga_eceran" value="{{ $barang->harga_eceran }}">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="harga_grosir">Harga Jual Grosir</label>
-                                    <div class="input-group mb-3"><span class="input-group-prepend"><span
-                                                class="input-group-text">Rp </span></span>
-                                        <input type="number" class="form-control harga_grosir" name="harga_grosir"
-                                            id="harga_grosir" value="{{ $barang->harga_grosir }}">
                                     </div>
                                 </div>
 
@@ -136,7 +127,7 @@
                         umum = parseInt(data.h_umum);
                     },
                     error: function(throwthrownError, ajaxOption, xhr) {
-                        // 
+                        //
                     }
                 })
             })
@@ -157,7 +148,7 @@
                         umum = parseInt(data.h_umum);
                     },
                     error: function(throwthrownError, ajaxOption, xhr) {
-                        // 
+                        //
                     }
                 })
             })
