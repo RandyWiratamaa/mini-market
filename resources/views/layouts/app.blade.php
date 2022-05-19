@@ -100,7 +100,7 @@
 
         .resize50 {
             height:50px;
-            font-size: 18px;
+            font-size: 12px;
         }
 
         .resize75 {

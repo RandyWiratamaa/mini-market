@@ -75,10 +75,10 @@
                                             </td>
                                             <td style="width:20%">
                                                 <input type="text" name="jual[0][nama]" class="form-control resize50 nama_barang"
-                                                    autocomplete="off" list="list-data" placeholder="Nama Barang" disabled>
+                                                    autocomplete="off" list="list-data-nama" placeholder="Nama Barang">
                                             </td>
                                             <td style="width:14%">
-                                                <input type="text" name="jual[0][barcode]" class="form-control resize50 caribarang"
+                                                <input type="text" name="jual[0][barcode]" class="form-control resize50 barcode caribarang"
                                                     autocomplete="off" list="list-data" placeholder="Barcode">
                                             </td>
                                             <td width="5%">
@@ -139,7 +139,7 @@
                                 <div class="form-group">
                                     <label style="font-size: 18px">Total Belanja</label>
                                     <input type="number" name="total_keseluruhan" class="form-control resize50 total-keseluruhan"
-                                    placeholder="Total" style="font-size: 80px;width:430px;height:430px;text-align:center;" readonly>
+                                    placeholder="Total" style="font-size: 50px;width:300px;height:300px;text-align:center;" readonly>
                                 </div>
                             </div>
                         </div>
@@ -176,6 +176,11 @@
                     <option class="datalist-barang" value="{{ $i->barcode }}">{{ $i->nama }}</option>
                 @endforeach
             </datalist>
+            <datalist id="list-data-nama">
+                @foreach ($barang as $i)
+                    <option class="datalist-barang" value="{{ $i->nama }}">{{ $i->barang }}</option>
+                @endforeach
+            </datalist>
         </div>
     </div>
 
@@ -188,8 +193,8 @@
             list.append(
                 '<tr class="baris-data"> \
                     <td style="width: 50px"><input type="text" placeholder="Kode Barang" class="form-control resize50 id-barang" style="width:60px;" name="jual[' + jual + '][id]" readonly></td> \
-                    <td style="width: 20%"><input type="text" name="jual[' + jual + '][nama]" class="form-control resize50 nama_barang" autocomplete="off" list="list-data" placeholder="Nama Barang" disabled></td> \
-                    <td style="width: 14%"><input type="text" name="jual[' + jual + '][barcode]" class="form-control resize50 caribarang" autocomplete="off" list="list-data" placeholder="Barcode"></td> \
+                    <td style="width: 20%"><input type="text" name="jual[' + jual + '][nama]" class="form-control resize50 nama_barang" autocomplete="off" list="list-data-nama" placeholder="Nama Barang"></td> \
+                    <td style="width: 14%"><input type="text" name="jual[' + jual + '][barcode]" class="form-control resize50 barcode caribarang" autocomplete="off" list="list-data" placeholder="Barcode"></td> \
                     <td width="5%"><button type="button" class="btn btn-sm btn-default resize50 clear-barang" title="Hapus Nama Barang" style=""><i class="icon icon-refresh" style="font-size: 10px;"></i></button></td>\
                     <td style="width: 8%"><input type="number" name="jual[' + jual + '][harga_beli]" class="form-control resize50 harga_beli" placeholder="Harga Beli"></td> \
                     <td style="width: 8%"><input type="number" name="jual[' + jual + '][harga_eceran]" class="form-control resize50 harga_eceran" placeholder="Harga Jual"></td> \
@@ -228,6 +233,43 @@
                                 true);
                         }
                         baris_b.find('.nama_barang').val(obj.nama)
+                        baris_b.find('.harga_eceran').val(obj.harga_eceran)
+                        baris_b.find('.id-barang').val(obj.id)
+                        baris_b.find('.harga_beli').val(obj.harga_beli)
+                        baris_b.find('.satuan').val(obj.satuan)
+                    })
+                },
+                error: function(thrownError, ajaxOption, xhr) {
+
+                }
+            })
+        })
+
+        $(document).on('keyup', '.nama_barang', function() {
+
+            var barang = $(this).val().toLowerCase()
+            var baris_b = $(this).parents('.baris-data')
+
+            $.ajax({
+                url: "{{ route('cari-nama') }}",
+                dataType: 'JSON',
+                type: 'GET',
+                data: {
+                    "cari": barang
+                },
+                success: function(data) {
+                    $.each(data, function(index, obj) {
+                        alert(obj.barcode)
+                        // console.log(obj.barcode)
+                        if (baris_b.find('.caribarang').val() == '') {
+                            $('#list-data option[value="' + barang + '"]').removeAttr(
+                                'disabled');
+                        } else {
+                            $('#list-data option[value="' + barang + '"]').prop(
+                                'disabled',
+                                true);
+                        }
+                        baris_b.find('.barcode').val(obj.barcode)
                         baris_b.find('.harga_eceran').val(obj.harga_eceran)
                         baris_b.find('.id-barang').val(obj.id)
                         baris_b.find('.harga_beli').val(obj.harga_beli)

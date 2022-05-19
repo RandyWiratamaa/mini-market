@@ -4,7 +4,7 @@
     <div class="dashboard-wrapper">
         <div class="container-fluid dashboard-content">
             <div class="row">
-                {{-- <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                     <div class="card border-3 border-top border-top-primary">
                         <div class="card-header">
                             <h3>Nominal Penjualan Hari Ini</h3>
@@ -15,7 +15,7 @@
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
                 {{-- <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                     <div class="card border-3 border-top border-top-primary">
                         <div class="card-header">
@@ -28,7 +28,7 @@
                         </div>
                     </div>
                 </div> --}}
-				{{-- <?php
+				<?php
 					$hpp1 = intval($hpp);
 					$penjualan1 = intval($penjualan);
 
@@ -45,7 +45,7 @@
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="card border-3 border-top border-top-primary">
                         <div class="card-header">
