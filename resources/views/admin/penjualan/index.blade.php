@@ -96,7 +96,7 @@
                                             </td>
                                             <td style="width:60px">
                                                 <input type="number" name="jual[0][qty]" class="form-control resize50 qty"
-                                                    placeholder="Qty">
+                                                    placeholder="Qty" min="0">
                                             </td>
                                             <td>
                                                 <input type="satuan" name="jual[0][satuan]" class="form-control resize50 satuan"
@@ -198,7 +198,7 @@
                     <td width="5%"><button type="button" class="btn btn-sm btn-default resize50 clear-barang" title="Hapus Nama Barang" style=""><i class="icon icon-refresh" style="font-size: 10px;"></i></button></td>\
                     <td style="width: 8%"><input type="number" name="jual[' + jual + '][harga_beli]" class="form-control resize50 harga_beli" placeholder="Harga Beli"></td> \
                     <td style="width: 8%"><input type="number" name="jual[' + jual + '][harga_eceran]" class="form-control resize50 harga_eceran" placeholder="Harga Jual"></td> \
-                    <td style="width:60px;"><input type="number" name="jual[' + jual + '][qty]" class="form-control resize50 qty" required placeholder="Qty"></td> \
+                    <td style="width:60px;"><input type="number" name="jual[' + jual + '][qty]" class="form-control resize50 qty" required placeholder="Qty" min="0"></td> \
                     <td><input type="text" name="jual[' + jual + '][satuan]" class="form-control resize50 satuan" placeholder="Satuan" readonly></td> \
                     <td><input type="number" name="jual[' + jual + '][subtotal]" class="form-control resize50 subtotal" placeholder="Subtotal" readonly></td> \
                     <td><input type="number" name="jual[' + jual + '][hpp]" class="form-control resize50 hpp" placeholder="hpp" readonly></td> \
@@ -299,38 +299,53 @@
             })
         })
 
-        // $(document).on('change', '.qty', function() {
-        //     var qty = $(this).val();
-        //     var baris_barang = $(this).parents('.baris-data');
-        //     var nama = baris_barang.find('.nama');
-        //     var harga_eceran = baris_barang.find('.harga_eceran');
-        //     var subtotal = baris_barang.find('.subtotal');
-        //     var harga_beli = baris_barang.find('.harga_beli');
-        //     var hpp = baris_barang.find('.hpp');
+        $(document).on('input', '.qty', function() {
+            var qty = $(this).val();
+            var baris_barang = $(this).parents('.baris-data');
+            var nama = baris_barang.find('.nama');
+            var harga_eceran = baris_barang.find('.harga_eceran');
+            var subtotal = baris_barang.find('.subtotal');
+            var harga_beli = baris_barang.find('.harga_beli');
+            var hpp = baris_barang.find('.hpp');
 
-        //     hpp.val(parseInt(qty) * parseInt(harga_beli.val()))
-        //     subtotal.val(parseInt(qty) * parseInt(harga_eceran.val()))
-        //     total_hpp()
-        //     mencari_total()
-        // })
+            hpp.val(parseInt(qty) * parseInt(harga_beli.val()))
+            subtotal.val(parseInt(qty) * parseInt(harga_eceran.val()))
+            total_hpp()
+            mencari_total()
+        })
 
-        // $(document).on('keyup', '.qty', function() {
-        //     var qty = $(this).val();
-        //     var baris_barang = $(this).parents('.baris-data');
-        //     var diskon = baris_barang.find('.diskon');
-        //     var nama = baris_barang.find('.nama');
-        //     var harga_eceran = baris_barang.find('.harga_eceran');
-        //     var subtotal = baris_barang.find('.subtotal');
-        //     var total = baris_barang.find('.total');
-        //     var harga_beli = baris_barang.find('.harga_beli');
-        //     var hpp = baris_barang.find('.hpp');
+        $(document).on('change', '.qty', function() {
+            var qty = $(this).val();
+            var baris_barang = $(this).parents('.baris-data');
+            var nama = baris_barang.find('.nama');
+            var harga_eceran = baris_barang.find('.harga_eceran');
+            var subtotal = baris_barang.find('.subtotal');
+            var harga_beli = baris_barang.find('.harga_beli');
+            var hpp = baris_barang.find('.hpp');
 
-        //     hpp.val(parseInt(qty) * parseInt(harga_beli.val()))
-        //     subtotal.val(parseInt(qty) * parseInt(harga_eceran.val()))
-        //     total.val(subtotal.val()) - (parseInt(diskon.val()))
-        //     total_hpp()
-        //     mencari_total()
-        // })
+            hpp.val(parseInt(qty) * parseInt(harga_beli.val()))
+            subtotal.val(parseInt(qty) * parseInt(harga_eceran.val()))
+            total_hpp()
+            mencari_total()
+        })
+
+        $(document).on('keyup', '.qty', function() {
+            var qty = $(this).val();
+            var baris_barang = $(this).parents('.baris-data');
+            var diskon = baris_barang.find('.diskon');
+            var nama = baris_barang.find('.nama');
+            var harga_eceran = baris_barang.find('.harga_eceran');
+            var subtotal = baris_barang.find('.subtotal');
+            var total = baris_barang.find('.total');
+            var harga_beli = baris_barang.find('.harga_beli');
+            var hpp = baris_barang.find('.hpp');
+
+            hpp.val(parseInt(qty) * parseInt(harga_beli.val()))
+            subtotal.val(parseInt(qty) * parseInt(harga_eceran.val()))
+            total.val(subtotal.val()) - (parseInt(diskon.val()))
+            total_hpp()
+            mencari_total()
+        })
 
         $(document).on('input', '.qty', function() {
             var qty = $(this).val();
@@ -402,7 +417,7 @@
             input_tagihan.val(tagihan)
             // console.log(tagihan)
         }
-        
+
         function total_hpp() {
             var nilai = 0;
             var total_hpp = $('.total_hpp')
