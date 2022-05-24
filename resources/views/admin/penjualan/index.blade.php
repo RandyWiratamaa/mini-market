@@ -259,12 +259,66 @@
                 }
             })
         })
+        
+        
+        $(document).on('change', '.caribarang', function() {
+
+            var barang = $(this).val().toLowerCase()
+            var baris_b = $(this).parents('.baris-data')
+            var nama_barang = baris_b.find('.nama_barang');
+            var harga_eceran = baris_b.find('.harga_eceran');
+            var id_barang = baris_b.find('.id-barang');
+            var harga_beli = baris_b.find('.harga_beli');
+            var satuan = baris_b.find('.satuan');
+            var qty = baris_b.find('.qty');
+            var hpp = baris_b.find('.hpp');
+            var subtotal = baris_b.find('.subtotal');
+            var total = baris_b.find('.total');
+            qty.val(1)
+            $.ajax({
+                url: "{{ route('cari') }}",
+                dataType: 'JSON',
+                type: 'GET',
+                data: {
+                    "cari": barang
+                },
+                success: function(data) {
+                    $.each(data, function(index, obj) {
+                        // alert(obj.barcode)
+                        // console.log(obj.barcode)
+                        if (baris_b.find('.caribarang').val() == '') {
+                            $('#list-data option[value="' + barang + '"]').removeAttr(
+                                'disabled');
+                        } else {
+                            $('#list-data option[value="' + barang + '"]').prop(
+                                'disabled',
+                                true);
+                        }
+                        nama_barang.val(obj.nama)
+                        harga_eceran.val(obj.harga_eceran)
+                        id_barang.val(obj.id_barang)
+                        harga_beli.val(obj.harga_beli)
+                        satuan.val(obj.satuan)
+                        hpp.val(parseInt(qty.val()) * parseInt(harga_beli.val()))
+                        subtotal.val(parseInt(qty.val()) * parseInt(harga_eceran.val()))
+                        total.val(subtotal.val())
+                        // console.log(parseInt(qty.val()) * parseInt(harga_beli.val()))
+                        total_hpp()
+                        mencari_total()
+                    })
+                },
+                error: function(thrownError, ajaxOption, xhr) {
+
+                }
+            })
+        })
+        
 
         $(document).on('keyup', '.nama_barang', function() {
 
             var barang = $(this).val().toLowerCase()
             var baris_b = $(this).parents('.baris-data')
-
+            
             $.ajax({
                 url: "{{ route('cari-nama') }}",
                 dataType: 'JSON',
