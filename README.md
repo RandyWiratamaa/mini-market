@@ -1,5 +1,5 @@
 ## About
-Aplikasi Farmasi menggunakan Framework Laravel 7.*
+Aplikasi Mini Market menggunakan Framework Laravel 7.*
 
 ![image_2022-06-07_11-07-01](https://user-images.githubusercontent.com/34479062/172294142-08548b80-3a4b-4b20-b01c-fa5bddadb921.png)
 ![image_2022-06-07_11-07-11](https://user-images.githubusercontent.com/34479062/172294207-f0a0e3aa-591b-4876-a146-d5064023a8ef.png)
